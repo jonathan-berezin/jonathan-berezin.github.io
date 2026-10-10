@@ -16,6 +16,19 @@ const experience = [
    tags:["HL7","EDI","Research","National Systems"]}
 ];
 
+const skills = {
+  core: ["Python","SQL","ETL","Data Analysis"],
+  standards: ["HL7 V2","HL7 V3","HL7 FHIR","EDI","IHE QRPC"],
+  tools: ["Claude Code","Cursor","VS Code","PyCharm","AQT","SSMS","AWS S3 / EC2 / SQS / SNS","GitHub"]
+};
+
+const education = [
+  {school:"The Hebrew University of Jerusalem", period:"Oct 2018 – May 2020", location:"Jerusalem, Israel",
+   detail:"Computational Neuroscience and Information Processing, Masters/Ph.D. Student. Courses in Machine Learning, Calculus, Dynamics, Statistics, Cognition, and Neurophysiology."},
+  {school:"The University of Texas at Austin", period:"Aug 2008 – May 2013", location:"Austin, Texas, USA",
+   detail:"B.S. in Computational Biomedical Engineering · High Honors · GPA 3.92/4.0 · Engineering Scholar. Team project: software for an Automated Biotransistor Analyzer for microRNA Quantification and Cancer Prognosis."}
+];
+
 const root = document.documentElement;
 const themeToggle = document.getElementById("themeToggle");
 function setTheme(t) {
@@ -30,20 +43,13 @@ themeToggle.addEventListener("click", () => setTheme(root.getAttribute("data-the
 
 const navBtns = document.querySelectorAll(".nav-btn");
 const panes = document.querySelectorAll(".pane");
-
 function showPane(name) {
   panes.forEach(p => p.classList.toggle("active", p.dataset.pane === name));
   navBtns.forEach(b => b.classList.toggle("active", b.dataset.section === name));
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-navBtns.forEach(btn => {
-  btn.addEventListener("click", () => showPane(btn.dataset.section));
-});
-
-function goHome() {
-  showPane("chart");
-}
+navBtns.forEach(btn => btn.addEventListener("click", () => showPane(btn.dataset.section)));
+function goHome() { showPane("chart"); }
 document.getElementById("homeBtn").addEventListener("click", goHome);
 document.getElementById("brandHome").addEventListener("click", goHome);
 
@@ -52,15 +58,6 @@ document.querySelectorAll("[data-toggle]").forEach(h => {
 });
 document.querySelectorAll(".edu-card").forEach(card => {
   card.addEventListener("click", () => card.classList.toggle("open"));
-});
-
-const humanView = document.getElementById("humanView");
-document.querySelectorAll("[data-view]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("[data-view]").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    humanView.className = (btn.dataset.view === "timeline" ? "view-timeline" : "view-cards") + " human-only";
-  });
 });
 
 const lensButtons = document.querySelectorAll("#lensButtons .ctrl-btn");
@@ -106,21 +103,12 @@ skillChips.forEach(chip => {
   });
 });
 
-const formatSelect = document.getElementById("formatSelect");
-const panels = {
-  hl7: document.getElementById("panel-hl7"),
-  ccda: document.getElementById("panel-ccda"),
-  json: document.getElementById("panel-json")
-};
-
-function buildHL7() {
+function buildExpHL7() {
   const ts = new Date().toISOString().replace(/[-:]/g,"").slice(0,14);
   const L = [];
-  L.push("; Jonathan Berezin -- Career as HL7 v2.x ADT-style message");
+  L.push("; Experience as HL7 v2.x");
   L.push("MSH|^~\\&|JB_CHART|JONATHAN_BEREZIN|VIEWER|WEB|"+ts+"||ADT^A08|MSG00001|P|2.5");
-  L.push("EVN|A08|"+ts);
-  L.push("PID|1||JB-001^^^GITHUB||BEREZIN^JONATHAN||19850101|M|||RAMAT_GAN^ISRAEL|||^WPN^PH^^^j.a.berezin@gmail.com");
-  L.push("PV1|1|O|MEDICAL_INFORMATICS^ENGINEER||||ANTIDOTE_HEALTH|||||||||||||||||||||||||||||||||||20260801");
+  L.push("PID|1||JB-001^^^GITHUB||BEREZIN^JONATHAN");
   experience.forEach((job,i) => {
     const n = i+1;
     L.push("OBX|"+n+"|TX|ROLE^Job Role||"+job.title+" at "+job.org+"||||||F");
@@ -128,60 +116,129 @@ function buildHL7() {
     L.push("OBX|"+n+".2|TX|LOC^Location||"+job.location+"||||||F");
     job.bullets.forEach((b,j) => L.push("OBX|"+n+"."+(j+3)+"|TX|NOTE^Achievement||"+b+"||||||F"));
   });
-  L.push("NTE|1||Medical Informatics · Clinical data bridges · Digital healthcare.");
   return L.join("\n");
 }
-function buildCCDA() {
-  const d = new Date().toISOString().slice(0,10).replace(/-/g,"");
+function buildExpCCDA() {
   const L = [];
-  L.push("<!-- Jonathan Berezin -- simplified C-CDA ClinicalDocument -->");
-  L.push("<ClinicalDocument xmlns=\"urn:hl7-org:v3\">");
-  L.push("  <typeId root=\"2.16.840.1.113883.1.3\" extension=\"POCD_HD000040\"/>");
-  L.push("  <id root=\"2.16.840.1.113883.19.5\" extension=\"JB-CV-001\"/>");
-  L.push("  <title>Jonathan Berezin -- Professional Summary</title>");
-  L.push("  <effectiveTime value=\""+d+"\"/>");
-  L.push("  <recordTarget><patientRole>");
-  L.push("    <id extension=\"JB-001\" root=\"2.16.840.1.113883.19.5\"/>");
-  L.push("    <patient><name><given>Jonathan</given><family>Berezin</family></name></patient>");
-  L.push("  </patientRole></recordTarget>");
-  L.push("  <component><structuredBody><component><section>");
-  L.push("    <title>Professional Experience</title><text>");
+  L.push("<!-- Experience · C-CDA section -->");
+  L.push("<section><title>Professional Experience</title><text>");
   experience.forEach(job => {
-    L.push("      <paragraph>");
-    L.push("        <content styleCode=\"Bold\">"+job.title+" -- "+job.org+"</content>");
-    L.push("        <br/>"+job.start+" to "+job.end+" · "+job.location);
-    job.bullets.forEach(b => L.push("        <br/>• "+b));
-    L.push("      </paragraph>");
+    L.push("  <paragraph><content styleCode=\"Bold\">"+job.title+" — "+job.org+"</content>");
+    L.push("  <br/>"+job.start+" to "+job.end+" · "+job.location);
+    job.bullets.forEach(b => L.push("  <br/>• "+b));
+    L.push("  </paragraph>");
   });
-  L.push("    </text></section></component></structuredBody></component>");
-  L.push("</ClinicalDocument>");
+  L.push("</text></section>");
   return L.join("\n");
 }
-function buildJSON() {
-  const obj = {
-    resourceType: "Person", id: "jonathan-berezin",
-    name: [{use:"official", family:"Berezin", given:["Jonathan"]}],
-    telecom: [
-      {system:"email", value:"j.a.berezin@gmail.com"},
-      {system:"url", value:"https://www.linkedin.com/in/jonathan-berezin"},
-      {system:"url", value:"https://github.com/jonathan-berezin"}
-    ],
-    address: [{city:"Ramat Gan", country:"IL"}],
-    extension: [{url:"https://jonathan-berezin.github.io/fhir/StructureDefinition/professional-summary",
-      valueString:"Medical Informatics Engineer · Data Migration & Integration · Python"}],
-    experience: experience.map(j => ({title:j.title, organization:j.org, period:{start:j.start,end:j.end}, location:j.location, highlights:j.bullets, tags:j.tags})),
-    skills: {core:["Python","SQL","ETL","Data Analysis"], standards:["HL7 V2","HL7 V3","HL7 FHIR","EDI","IHE QRPC"], tools:["Cursor","VS Code","PyCharm","AQT","SSMS","AWS","GitHub"]}
-  };
-  return JSON.stringify(obj, null, 2);
+function buildExpFHIR() {
+  return JSON.stringify({
+    resourceType: "Bundle", type: "collection",
+    entry: experience.map(j => ({
+      resource: {
+        resourceType: "PractitionerRole",
+        code: [{text: j.title}],
+        organization: {display: j.org},
+        period: {start: j.start, end: j.end === "present" ? undefined : j.end},
+        location: [{display: j.location}],
+        extension: j.bullets.map(b => ({url: "https://jonathan-berezin.github.io/fhir/highlight", valueString: b}))
+      }
+    }))
+  }, null, 2);
 }
-panels.hl7.textContent = buildHL7();
-panels.ccda.textContent = buildCCDA();
-panels.json.textContent = buildJSON();
+
+function buildSkillsHL7() {
+  const L = ["; Skills as HL7 v2.x OBX segments"];
+  let n = 1;
+  Object.entries(skills).forEach(([group, items]) => {
+    items.forEach(s => {
+      L.push("OBX|"+(n++)+"|ST|SKILL^"+group.toUpperCase()+"||"+s+"||||||F");
+    });
+  });
+  return L.join("\n");
+}
+function buildSkillsCCDA() {
+  const L = ["<!-- Skills · C-CDA -->", "<section><title>Skills</title><text>"];
+  Object.entries(skills).forEach(([group, items]) => {
+    L.push("  <paragraph><content styleCode=\"Bold\">"+group+"</content><br/>"+items.join(", ")+"</paragraph>");
+  });
+  L.push("</text></section>");
+  return L.join("\n");
+}
+function buildSkillsFHIR() {
+  return JSON.stringify({
+    resourceType: "Practitioner",
+    qualification: Object.entries(skills).flatMap(([group, items]) =>
+      items.map(s => ({code: {text: s}, extension: [{url: "category", valueString: group}]}))
+    )
+  }, null, 2);
+}
+
+function buildEduHL7() {
+  const L = ["; Education as HL7 v2.x"];
+  education.forEach((e,i) => {
+    const n = i+1;
+    L.push("OBX|"+n+"|TX|EDU^School||"+e.school+"||||||F");
+    L.push("OBX|"+n+".1|TX|PERIOD^Period||"+e.period+"||||||F");
+    L.push("OBX|"+n+".2|TX|LOC^Location||"+e.location+"||||||F");
+    L.push("OBX|"+n+".3|TX|NOTE^Detail||"+e.detail+"||||||F");
+  });
+  return L.join("\n");
+}
+function buildEduCCDA() {
+  const L = ["<!-- Education · C-CDA -->", "<section><title>Education</title><text>"];
+  education.forEach(e => {
+    L.push("  <paragraph><content styleCode=\"Bold\">"+e.school+"</content>");
+    L.push("  <br/>"+e.period+" · "+e.location);
+    L.push("  <br/>"+e.detail+"</paragraph>");
+  });
+  L.push("</text></section>");
+  return L.join("\n");
+}
+function buildEduFHIR() {
+  return JSON.stringify({
+    resourceType: "Bundle", type: "collection",
+    entry: education.map(e => ({
+      resource: {
+        resourceType: "EducationalOccupationalCredential",
+        name: e.school,
+        description: e.detail,
+        date: e.period,
+        recognizedBy: {display: e.location}
+      }
+    }))
+  }, null, 2);
+}
+
+const formatSelect = document.getElementById("formatSelect");
+const panels = {
+  "exp-hl7": document.getElementById("panel-exp-hl7"),
+  "exp-ccda": document.getElementById("panel-exp-ccda"),
+  "exp-fhir": document.getElementById("panel-exp-fhir"),
+  "skills-hl7": document.getElementById("panel-skills-hl7"),
+  "skills-ccda": document.getElementById("panel-skills-ccda"),
+  "skills-fhir": document.getElementById("panel-skills-fhir"),
+  "edu-hl7": document.getElementById("panel-edu-hl7"),
+  "edu-ccda": document.getElementById("panel-edu-ccda"),
+  "edu-fhir": document.getElementById("panel-edu-fhir")
+};
+
+panels["exp-hl7"].textContent = buildExpHL7();
+panels["exp-ccda"].textContent = buildExpCCDA();
+panels["exp-fhir"].textContent = buildExpFHIR();
+panels["skills-hl7"].textContent = buildSkillsHL7();
+panels["skills-ccda"].textContent = buildSkillsCCDA();
+panels["skills-fhir"].textContent = buildSkillsFHIR();
+panels["edu-hl7"].textContent = buildEduHL7();
+panels["edu-ccda"].textContent = buildEduCCDA();
+panels["edu-fhir"].textContent = buildEduFHIR();
 
 function applyFormat(fmt) {
-  Object.keys(panels).forEach(k => panels[k].classList.toggle("visible", k === fmt));
+  Object.keys(panels).forEach(k => {
+    const kind = k.split("-")[1];
+    panels[k].classList.toggle("visible", kind === fmt);
+  });
   document.body.classList.toggle("format-active", fmt !== "human");
-  if (fmt !== "human") showPane("experience");
 }
 formatSelect.addEventListener("change", () => applyFormat(formatSelect.value));
 
@@ -198,7 +255,7 @@ function runSearch(q) {
     if (match) shown++;
   });
   if (q) {
-    searchMeta.textContent = shown + " of " + total + " matches";
+    searchMeta.textContent = shown + " / " + total;
     document.querySelectorAll(".exp-card:not(.search-hide)").forEach(c => c.classList.add("open"));
     showPane("experience");
   } else {

@@ -3,180 +3,247 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jonathan Berezin — Data Migration & Integration Engineer</title>
-<meta name="theme-color" content="#0c1222" />
+<title>Jonathan Berezin — Chart | Medical Informatics</title>
+<meta name="description" content="Jonathan Berezin — Medical Informatics Engineer. Interactive professional chart." />
+<meta name="theme-color" content="#090942" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="container">
-<header>
-  <div class="top-bar">
-    <div class="logo">JB</div>
-    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">☀</span></button>
+<aside class="sidebar" aria-label="Chart navigation">
+  <div class="sidebar-logo" title="JB Chart">JB</div>
+  <button class="nav-btn active" data-section="chart" title="Chart overview"><span>&#9783;</span><span class="label">Chart</span></button>
+  <button class="nav-btn" data-section="experience" title="Experience"><span>&#9878;</span><span class="label">Exp</span></button>
+  <button class="nav-btn" data-section="skills" title="Skills"><span>&#9881;</span><span class="label">Skills</span></button>
+  <button class="nav-btn" data-section="education" title="Education"><span>&#127891;</span><span class="label">Edu</span></button>
+  <button class="nav-btn" data-section="contact" title="Contact"><span>&#9993;</span><span class="label">Contact</span></button>
+</aside>
+
+<header class="top-nav">
+  <div class="brand">
+    JB<span class="plus">+</span>Chart
+    <span class="brand-sub">Professional Record</span>
   </div>
-  <div class="hero">
-    <div class="avatar-wrap">
-      <img class="avatar" src="https://avatars.githubusercontent.com/u/68218342?v=4" alt="Jonathan Berezin" width="110" height="110" />
-      <div class="avatar-ring" aria-hidden="true"></div>
-    </div>
-    <div class="hero-text">
-      <h1>Jonathan Berezin</h1>
-      <p class="tagline">Problem Solver · Data Migration & Integration Engineer · Python Developer<br />Building bridges between clinical systems in digital healthcare.</p>
-      <div class="roles">
-        <span class="role-pill">Data Migration</span>
-        <span class="role-pill">HL7 / EDI / FHIR</span>
-        <span class="role-pill">Python Tooling</span>
-        <span class="role-pill">Healthcare Interop</span>
-      </div>
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/jonathan-berezin" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:j.a.berezin@gmail.com">j.a.berezin@gmail.com</a>
-        <a href="https://github.com/jonathan-berezin" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
+  <div class="top-right">
+    <select id="formatSelect" class="format-select" title="Data format">
+      <option value="human">Human</option>
+      <option value="hl7">HL7 v2</option>
+      <option value="ccda">C-CDA</option>
+      <option value="json">JSON</option>
+    </select>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Theme">&#9788;</button>
   </div>
 </header>
 
-<section id="experience">
-  <h2 class="section-title">Experience</h2>
-  <div class="control-bar">
-    <div class="control-row">
-      <span class="control-label">View</span>
-      <div class="btn-group" id="viewButtons">
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="search" id="globalSearch" placeholder="Search chart — roles, skills, orgs, keywords…" autocomplete="off" />
+  </div>
+  <span class="search-meta" id="searchMeta"></span>
+</div>
+
+<main class="main">
+  <div class="patient-banner" id="section-chart">
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/68218342?v=4" alt="Jonathan Berezin" width="72" height="72" />
+    <div>
+      <div class="mrn">MRN · JB-001 · Active</div>
+      <h1>Jonathan Berezin</h1>
+      <p class="tagline">Medical Informatics Engineer · Data Migration & Integration · Python</p>
+      <div class="pills">
+        <span class="pill">Antidote Health</span>
+        <span class="pill blue">HL7 / FHIR / EDI</span>
+        <span class="pill blue">EMR Interop</span>
+        <span class="pill">Ramat Gan, IL</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="section-panel" id="section-experience">
+    <div class="section-header">
+      <h2>Experience · Encounters</h2>
+      <div class="toolbar-row" style="margin:0">
         <button class="ctrl-btn active" data-view="cards">Cards</button>
         <button class="ctrl-btn" data-view="timeline">Timeline</button>
       </div>
     </div>
-    <div class="control-row">
-      <span class="control-label">Focus</span>
-      <div class="btn-group" id="lensButtons">
+    <div class="section-body">
+      <div class="toolbar-row human-only" id="lensButtons">
         <button class="ctrl-btn active" data-lens="all">All</button>
         <button class="ctrl-btn" data-lens="migration">Migration / ETL</button>
         <button class="ctrl-btn" data-lens="edi">EDI · HL7 · FHIR</button>
-        <button class="ctrl-btn" data-lens="python">Python Tools</button>
+        <button class="ctrl-btn" data-lens="python">Python</button>
         <button class="ctrl-btn" data-lens="integration">Integration</button>
         <button class="ctrl-btn" data-lens="design">UI / UX</button>
         <button class="ctrl-btn" data-lens="mentoring">Mentoring</button>
       </div>
-    </div>
-    <div class="control-row">
-      <span class="control-label">Format</span>
-      <div class="btn-group" id="formatButtons">
-        <button class="ctrl-btn format-btn active" data-format="human">Human</button>
-        <button class="ctrl-btn format-btn" data-format="hl7">HL7 v2</button>
-        <button class="ctrl-btn format-btn" data-format="ccda">C-CDA</button>
-        <button class="ctrl-btn format-btn" data-format="json">JSON</button>
+      <div class="format-panel" id="panel-hl7"></div>
+      <div class="format-panel" id="panel-ccda"></div>
+      <div class="format-panel" id="panel-json"></div>
+      <div id="humanView" class="view-cards human-only">
+        <div class="exp-list" id="expList">
+
+          <article class="exp-card open" data-lenses="integration edi python" data-search="antidote medical informatics engineer ramat gan 2026">
+            <div class="exp-header" data-toggle>
+              <div class="exp-title">Medical Informatics Engineer · Antidote Health</div>
+              <div class="exp-meta"><span>Aug 2026 – Present</span><span>Ramat Gan, Israel</span></div>
+              <div class="exp-tags"><span class="exp-tag">Informatics</span><span class="exp-tag">Interop</span><span class="exp-tag">Health Tech</span></div>
+              <div class="expand-hint"><span class="chevron">▾</span> details</div>
+            </div>
+            <div class="exp-body"><div class="exp-body-inner"><ul>
+              <li data-tags="integration edi">Supporting clinical and operational systems as Medical Informatics Engineer at a virtual-first health plan.</li>
+              <li data-tags="python integration">Applying healthcare data standards, integration patterns, and engineering practices across product and clinical workflows.</li>
+            </ul></div></div>
+          </article>
+
+          <article class="exp-card" data-lenses="migration python design integration" data-search="aesto data migration engineer etl python emr ui ux rehovot 2023">
+            <div class="exp-header" data-toggle>
+              <div class="exp-title">Data Migration Engineer · Aesto Health</div>
+              <div class="exp-meta"><span>Jan 2023 – Aug 2026</span><span>Rehovot, Israel (Remote) · HQ Birmingham, AL</span></div>
+              <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">EMR</span><span class="exp-tag">UI/UX</span></div>
+              <div class="expand-hint"><span class="chevron">▾</span> details</div>
+            </div>
+            <div class="exp-body"><div class="exp-body-inner"><ul>
+              <li data-tags="migration integration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data into internal products.</li>
+              <li data-tags="python">Developed, tested, and distributed Python scripts and tools — CLIs and Textual GUIs — to assist with project work and organization.</li>
+              <li data-tags="design">Contributed to the improvement of UI/UX design of client-facing and internal products via development processes.</li>
+            </ul></div></div>
+          </article>
+
+          <article class="exp-card" data-lenses="migration python mentoring" data-search="emerge data migration clinical data python mentoring tel aviv 2021">
+            <div class="exp-header" data-toggle>
+              <div class="exp-title">Data Migration Engineer · Emerge Medical Data Intelligence</div>
+              <div class="exp-meta"><span>Jun 2021 – Dec 2022</span><span>Tel Aviv, Israel</span></div>
+              <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">Clinical Data</span><span class="exp-tag">Mentoring</span></div>
+              <div class="expand-hint"><span class="chevron">▾</span> details</div>
+            </div>
+            <div class="exp-body"><div class="exp-body-inner"><ul>
+              <li data-tags="migration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data to internal products.</li>
+              <li data-tags="python migration">Developed and tested Python modules and scripts for processing discrete clinical data, non-discrete documents, and images.</li>
+              <li data-tags="mentoring python">Educated teammates about Python and encouraged programming best practices in meetings and company articles.</li>
+            </ul></div></div>
+          </article>
+
+          <article class="exp-card" data-lenses="edi integration" data-search="hyro epic app market apis appointment scheduling tel aviv 2020">
+            <div class="exp-header" data-toggle>
+              <div class="exp-title">Electronic Data Integration Consultant · Hyro Conversational AI</div>
+              <div class="exp-meta"><span>Oct 2020 – May 2021</span><span>Tel Aviv, Israel</span></div>
+              <div class="exp-tags"><span class="exp-tag">Epic</span><span class="exp-tag">APIs</span><span class="exp-tag">App Market</span></div>
+              <div class="expand-hint"><span class="chevron">▾</span> details</div>
+            </div>
+            <div class="exp-body"><div class="exp-body-inner"><ul>
+              <li data-tags="edi integration">Assisted project managers and developers through Epic’s process to be approved for Epic’s App Market (previously App Orchard).</li>
+              <li data-tags="edi integration">Reviewed and planned use of APIs for Provider-Availability and Patient-Appointment-Scheduling.</li>
+            </ul></div></div>
+          </article>
+
+          <article class="exp-card" data-lenses="edi integration migration" data-search="epic electronic data integration hl7 research md anderson wisconsin 2013">
+            <div class="exp-header" data-toggle>
+              <div class="exp-title">Electronic Data Integration Engineer · Epic</div>
+              <div class="exp-meta"><span>Oct 2013 – May 2017</span><span>Verona, Wisconsin, USA</span></div>
+              <div class="exp-tags"><span class="exp-tag">HL7</span><span class="exp-tag">EDI</span><span class="exp-tag">Research</span><span class="exp-tag">National Systems</span></div>
+              <div class="expand-hint"><span class="chevron">▾</span> details</div>
+            </div>
+            <div class="exp-body"><div class="exp-body-inner"><ul>
+              <li data-tags="edi integration">Directed and developed integrations to bridge Epic and Clinical Research Management Systems.</li>
+              <li data-tags="edi integration">Developed integrations with national databases in Australia and Finland to enhance patient care, including birth- and death-reporting.</li>
+              <li data-tags="edi integration migration">Implemented Access-, Ambulatory-, Research-, Revenue-, and Pharmacy-related integrations for The MD Anderson Cancer Center.</li>
+            </ul></div></div>
+          </article>
+
+        </div>
       </div>
     </div>
-    <p class="hint">Cards ↔ Timeline · Focus lenses highlight matching work · Format re-encodes data the way interop systems talk.</p>
-  </div>
-  <div class="active-badge" id="activeLensBadge">
-    <span id="activeLensText"></span>
-    <button class="clear-btn" id="clearLens" aria-label="Clear">×</button>
-  </div>
-  <div class="format-panel" id="panel-hl7" aria-live="polite"></div>
-  <div class="format-panel" id="panel-ccda" aria-live="polite"></div>
-  <div class="format-panel" id="panel-json" aria-live="polite"></div>
-  <div id="humanView" class="view-cards">
-    <div class="exp-list" id="expList">
-      <article class="exp-card open" data-lenses="migration python design integration">
-        <div class="exp-header" data-toggle>
-          <div class="exp-title">Data Migration Engineer · Aesto Health</div>
-          <div class="exp-meta"><span>Jan 2023 – Present</span><span>Rehovot, Israel (Remote) · HQ Birmingham, AL</span></div>
-          <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">EMR</span><span class="exp-tag">UI/UX</span></div>
-          <div class="expand-hint"><span class="chevron">▾</span> details</div>
-        </div>
-        <div class="exp-body"><div class="exp-body-inner"><ul>
-          <li data-tags="migration integration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data into internal products.</li>
-          <li data-tags="python">Developed, tested, and distributed Python scripts and tools — CLIs and Textual GUIs — to assist with project work and organization.</li>
-          <li data-tags="design">Contributed to the improvement of UI/UX design of client-facing and internal products via development processes.</li>
-        </ul></div></div>
-      </article>
-      <article class="exp-card" data-lenses="migration python mentoring">
-        <div class="exp-header" data-toggle>
-          <div class="exp-title">Data Migration Engineer · Emerge Medical Data Intelligence</div>
-          <div class="exp-meta"><span>Jun 2021 – Dec 2022</span><span>Tel Aviv, Israel</span></div>
-          <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">Clinical Data</span><span class="exp-tag">Mentoring</span></div>
-          <div class="expand-hint"><span class="chevron">▾</span> details</div>
-        </div>
-        <div class="exp-body"><div class="exp-body-inner"><ul>
-          <li data-tags="migration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data to internal products.</li>
-          <li data-tags="python migration">Developed and tested Python modules and scripts for processing discrete clinical data, non-discrete documents, and images.</li>
-          <li data-tags="mentoring python">Educated teammates about Python and encouraged programming best practices in meetings and company articles.</li>
-        </ul></div></div>
-      </article>
-      <article class="exp-card" data-lenses="edi integration">
-        <div class="exp-header" data-toggle>
-          <div class="exp-title">Electronic Data Integration Consultant · Hyro Conversational AI</div>
-          <div class="exp-meta"><span>Oct 2020 – May 2021</span><span>Tel Aviv, Israel</span></div>
-          <div class="exp-tags"><span class="exp-tag">Epic</span><span class="exp-tag">APIs</span><span class="exp-tag">App Market</span></div>
-          <div class="expand-hint"><span class="chevron">▾</span> details</div>
-        </div>
-        <div class="exp-body"><div class="exp-body-inner"><ul>
-          <li data-tags="edi integration">Assisted project managers and developers through Epic’s process to be approved for Epic’s App Market (previously App Orchard).</li>
-          <li data-tags="edi integration">Reviewed and planned use of APIs for Provider-Availability and Patient-Appointment-Scheduling.</li>
-        </ul></div></div>
-      </article>
-      <article class="exp-card" data-lenses="edi integration migration">
-        <div class="exp-header" data-toggle>
-          <div class="exp-title">Electronic Data Integration Engineer · Epic</div>
-          <div class="exp-meta"><span>Oct 2013 – May 2017</span><span>Verona, Wisconsin, USA</span></div>
-          <div class="exp-tags"><span class="exp-tag">HL7</span><span class="exp-tag">EDI</span><span class="exp-tag">Research</span><span class="exp-tag">National Systems</span></div>
-          <div class="expand-hint"><span class="chevron">▾</span> details</div>
-        </div>
-        <div class="exp-body"><div class="exp-body-inner"><ul>
-          <li data-tags="edi integration">Directed and developed integrations to bridge Epic and Clinical Research Management Systems.</li>
-          <li data-tags="edi integration">Developed integrations with national databases in Australia and Finland to enhance patient care, including birth- and death-reporting.</li>
-          <li data-tags="edi integration migration">Implemented Access-, Ambulatory-, Research-, Revenue-, and Pharmacy-related integrations for The MD Anderson Cancer Center.</li>
-        </ul></div></div>
-      </article>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section id="skills">
-  <h2 class="section-title">Tech & Skills</h2>
-  <div class="skills-grid">
-    <div class="skill-group"><h3>Core</h3><div class="skill-chips">
-      <span class="skill-chip" data-skill="python">Python</span><span class="skill-chip" data-skill="sql">SQL</span>
-      <span class="skill-chip" data-skill="etl">ETL</span><span class="skill-chip" data-skill="analysis">Data Analysis</span>
-    </div></div>
-    <div class="skill-group"><h3>Standards & Interop</h3><div class="skill-chips">
-      <span class="skill-chip" data-skill="hl7">HL7 V2</span><span class="skill-chip" data-skill="hl7">HL7 V3</span>
-      <span class="skill-chip" data-skill="fhir">HL7 FHIR</span><span class="skill-chip" data-skill="edi">EDI</span>
-      <span class="skill-chip" data-skill="ihe">IHE QRPC</span>
-    </div></div>
-    <div class="skill-group"><h3>Tools & Platforms</h3><div class="skill-chips">
-      <span class="skill-chip">Cursor</span><span class="skill-chip">VS Code</span><span class="skill-chip">PyCharm</span>
-      <span class="skill-chip">AQT</span><span class="skill-chip">SSMS</span>
-      <span class="skill-chip">AWS S3 / EC2 / SQS / SNS</span><span class="skill-chip">GitHub</span>
-    </div></div>
-  </div>
-</section>
-
-<section id="education">
-  <h2 class="section-title">Background</h2>
-  <div class="edu-list">
-    <div class="edu-card">
-      <h3>The Hebrew University of Jerusalem</h3>
-      <div class="edu-meta">Oct 2018 – May 2020 · Jerusalem, Israel</div>
-      <p>Computational Neuroscience and Information Processing, Masters/Ph.D. Student. Studied Machine Learning, Calculus, Dynamics, Statistics, Cognition, and Neurophysiology.</p>
+  <section class="section-panel" id="section-skills">
+    <div class="section-header"><h2>Tech & Skills · Orders / Catalog</h2></div>
+    <div class="section-body">
+      <p class="skill-hint">Click a skill to filter experience by that capability. Click again to clear.</p>
+      <div class="skills-grid" id="skillsGrid">
+        <div class="skill-group">
+          <h3>Core</h3>
+          <div class="skill-chips">
+            <button type="button" class="skill-chip" data-skill="python" data-lens="python">Python</button>
+            <button type="button" class="skill-chip" data-skill="sql" data-lens="migration">SQL</button>
+            <button type="button" class="skill-chip" data-skill="etl" data-lens="migration">ETL</button>
+            <button type="button" class="skill-chip" data-skill="analysis" data-lens="migration">Data Analysis</button>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Standards & Interop</h3>
+          <div class="skill-chips">
+            <button type="button" class="skill-chip" data-skill="hl7" data-lens="edi">HL7 V2</button>
+            <button type="button" class="skill-chip" data-skill="hl7" data-lens="edi">HL7 V3</button>
+            <button type="button" class="skill-chip" data-skill="fhir" data-lens="edi">HL7 FHIR</button>
+            <button type="button" class="skill-chip" data-skill="edi" data-lens="edi">EDI</button>
+            <button type="button" class="skill-chip" data-skill="ihe" data-lens="edi">IHE QRPC</button>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools & Platforms</h3>
+          <div class="skill-chips">
+            <button type="button" class="skill-chip" data-skill="cursor" data-lens="python">Cursor</button>
+            <button type="button" class="skill-chip" data-skill="vscode" data-lens="python">VS Code</button>
+            <button type="button" class="skill-chip" data-skill="pycharm" data-lens="python">PyCharm</button>
+            <button type="button" class="skill-chip" data-skill="aqt" data-lens="migration">AQT</button>
+            <button type="button" class="skill-chip" data-skill="ssms" data-lens="migration">SSMS</button>
+            <button type="button" class="skill-chip" data-skill="aws" data-lens="integration">AWS S3 / EC2 / SQS / SNS</button>
+            <button type="button" class="skill-chip" data-skill="github" data-lens="python">GitHub</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="edu-card">
-      <h3>The University of Texas at Austin</h3>
-      <div class="edu-meta">Aug 2008 – May 2013 · Austin, Texas, USA</div>
-      <p>B.S. in Computational Biomedical Engineering · Graduated with High Honors · GPA 3.92/4.0 · Engineering Scholar. Team project: designed the software for an “Automated Biotransistor Analyzer for microRNA Quantification and Cancer Prognosis.”</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <p>Interactive CV · Free on GitHub Pages · <a href="https://github.com/jonathan-berezin/jonathan-berezin.github.io">Source</a></p>
-  <p style="margin-top:0.35rem">Get in touch on <a href="https://www.linkedin.com/in/jonathan-berezin" target="_blank" rel="noopener">LinkedIn</a> or email <a href="mailto:j.a.berezin@gmail.com">j.a.berezin@gmail.com</a></p>
-</footer>
-</div>
+  <section class="section-panel" id="section-education">
+    <div class="section-header"><h2>Background · History</h2></div>
+    <div class="section-body">
+      <p class="skill-hint">Click a card to expand details.</p>
+      <div class="edu-list">
+        <div class="edu-card" data-search="hebrew university jerusalem computational neuroscience machine learning 2018">
+          <h3>The Hebrew University of Jerusalem</h3>
+          <div class="edu-meta">Oct 2018 – May 2020 · Jerusalem, Israel</div>
+          <div class="edu-detail">Computational Neuroscience and Information Processing, Masters/Ph.D. Student. Courses in Machine Learning, Calculus, Dynamics, Statistics, Cognition, and Neurophysiology.</div>
+        </div>
+        <div class="edu-card" data-search="university texas austin computational biomedical engineering high honors gpa 2008">
+          <h3>The University of Texas at Austin</h3>
+          <div class="edu-meta">Aug 2008 – May 2013 · Austin, Texas, USA</div>
+          <div class="edu-detail">B.S. in Computational Biomedical Engineering · High Honors · GPA 3.92/4.0 · Engineering Scholar. Team project: software for an “Automated Biotransistor Analyzer for microRNA Quantification and Cancer Prognosis.”</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-panel" id="section-contact">
+    <div class="section-header"><h2>Contact · Demographics</h2></div>
+    <div class="section-body">
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="label">Email</div>
+          <a href="mailto:j.a.berezin@gmail.com">j.a.berezin@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <div class="label">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/jonathan-berezin" target="_blank" rel="noopener">linkedin.com/in/jonathan-berezin</a>
+        </div>
+        <div class="contact-item">
+          <div class="label">GitHub</div>
+          <a href="https://github.com/jonathan-berezin" target="_blank" rel="noopener">github.com/jonathan-berezin</a>
+        </div>
+        <div class="contact-item">
+          <div class="label">Location</div>
+          <span>Ramat Gan / Rehovot, Israel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="emr-footer">
+    JB+Chart · Interactive professional record · <a href="https://github.com/jonathan-berezin/jonathan-berezin.github.io">Source</a>
+  </footer>
+</main>
 <script src="app.js"></script>
 </body>
 </html>

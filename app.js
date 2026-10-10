@@ -1,5 +1,9 @@
+
 const experience = [
-  {id:"aesto",title:"Data Migration Engineer",org:"Aesto Health",start:"202301",end:"present",location:"Rehovot, Israel (Remote)",
+  {id:"antidote",title:"Medical Informatics Engineer",org:"Antidote Health",start:"202608",end:"present",location:"Ramat Gan, Israel",
+   bullets:["Supporting clinical and operational systems as Medical Informatics Engineer at a virtual-first health plan.","Applying healthcare data standards, integration patterns, and engineering practices across product and clinical workflows."],
+   tags:["Informatics","Interop","Health Tech"]},
+  {id:"aesto",title:"Data Migration Engineer",org:"Aesto Health",start:"202301",end:"202608",location:"Rehovot, Israel (Remote)",
    bullets:["Explored and queried many different EMR vendors' databases to extract, transform, and load clinical data into internal products.","Developed, tested, and distributed Python scripts and tools — CLIs and Textual GUIs — to assist with project work and organization.","Contributed to the improvement of UI/UX design of client-facing and internal products via development processes."],
    tags:["ETL","Python","EMR","UI/UX"]},
   {id:"emerge",title:"Data Migration Engineer",org:"Emerge Medical Data Intelligence",start:"202106",end:"202212",location:"Tel Aviv, Israel",
@@ -15,39 +19,51 @@ const experience = [
 
 const root = document.documentElement;
 const themeToggle = document.getElementById("themeToggle");
-const themeIcon = document.getElementById("themeIcon");
-function setTheme(theme) {
-  root.setAttribute("data-theme", theme);
-  themeIcon.textContent = theme === "light" ? "\u263E" : "\u2600";
-  localStorage.setItem("theme", theme);
+function setTheme(t) {
+  root.setAttribute("data-theme", t);
+  themeToggle.textContent = t === "dark" ? "\u263E" : "\u2600";
+  localStorage.setItem("theme", t);
 }
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) setTheme(savedTheme);
-else if (window.matchMedia("(prefers-color-scheme: light)").matches) setTheme("light");
-else setTheme("dark");
-themeToggle.addEventListener("click", () => setTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light"));
+const saved = localStorage.getItem("theme");
+if (saved) setTheme(saved);
+else if (window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+else setTheme("light");
+themeToggle.addEventListener("click", () => setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark"));
 
-document.querySelectorAll("[data-toggle]").forEach(h => h.addEventListener("click", () => h.closest(".exp-card").classList.toggle("open")));
+const navBtns = document.querySelectorAll(".nav-btn");
+navBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    navBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const el = document.getElementById("section-" + btn.dataset.section);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+document.querySelectorAll("[data-toggle]").forEach(h => {
+  h.addEventListener("click", () => h.closest(".exp-card").classList.toggle("open"));
+});
+document.querySelectorAll(".edu-card").forEach(card => {
+  card.addEventListener("click", () => card.classList.toggle("open"));
+});
 
 const humanView = document.getElementById("humanView");
-document.querySelectorAll("#viewButtons .ctrl-btn").forEach(btn => {
+document.querySelectorAll("[data-view]").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll("#viewButtons .ctrl-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("[data-view]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    humanView.className = btn.dataset.view === "timeline" ? "view-timeline" : "view-cards";
+    humanView.className = (btn.dataset.view === "timeline" ? "view-timeline" : "view-cards") + " human-only";
   });
 });
 
 const lensButtons = document.querySelectorAll("#lensButtons .ctrl-btn");
 const cards = document.querySelectorAll(".exp-card");
-const badge = document.getElementById("activeLensBadge");
-const badgeText = document.getElementById("activeLensText");
 const skillChips = document.querySelectorAll(".skill-chip");
 
 function applyLens(lens) {
   lensButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.lens === lens));
+  skillChips.forEach(c => c.classList.remove("active"));
   if (lens === "all") {
-    badge.classList.remove("visible");
     cards.forEach(card => {
       card.classList.remove("dimmed", "highlighted");
       card.querySelectorAll("li").forEach(li => li.classList.remove("relevant", "irrelevant"));
@@ -55,8 +71,6 @@ function applyLens(lens) {
     skillChips.forEach(c => c.classList.remove("highlight"));
     return;
   }
-  badgeText.textContent = "Focus: " + document.querySelector('#lensButtons [data-lens="'+lens+'"]').textContent;
-  badge.classList.add("visible");
   cards.forEach(card => {
     const matches = (card.dataset.lenses || "").split(/\s+/).includes(lens);
     card.classList.toggle("dimmed", !matches);
@@ -68,23 +82,38 @@ function applyLens(lens) {
       li.classList.toggle("irrelevant", !relevant || !matches);
     });
   });
-  const skillMap = {migration:["python","sql","etl","analysis"],edi:["hl7","fhir","edi","ihe"],python:["python"],integration:["hl7","fhir","edi"],design:[],mentoring:["python"]};
-  skillChips.forEach(chip => chip.classList.toggle("highlight", (skillMap[lens]||[]).includes(chip.dataset.skill||"")));
+  skillChips.forEach(chip => {
+    chip.classList.toggle("highlight", chip.dataset.lens === lens);
+  });
 }
 lensButtons.forEach(btn => btn.addEventListener("click", () => applyLens(btn.dataset.lens)));
-document.getElementById("clearLens").addEventListener("click", () => applyLens("all"));
 
-const formatButtons = document.querySelectorAll("#formatButtons .ctrl-btn");
-const panels = {hl7: document.getElementById("panel-hl7"), ccda: document.getElementById("panel-ccda"), json: document.getElementById("panel-json")};
+skillChips.forEach(chip => {
+  chip.addEventListener("click", () => {
+    const was = chip.classList.contains("active");
+    skillChips.forEach(c => c.classList.remove("active"));
+    if (was) { applyLens("all"); return; }
+    chip.classList.add("active");
+    applyLens(chip.dataset.lens || "all");
+    document.getElementById("section-experience").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+const formatSelect = document.getElementById("formatSelect");
+const panels = {
+  hl7: document.getElementById("panel-hl7"),
+  ccda: document.getElementById("panel-ccda"),
+  json: document.getElementById("panel-json")
+};
 
 function buildHL7() {
   const ts = new Date().toISOString().replace(/[-:]/g,"").slice(0,14);
   const L = [];
   L.push("; Jonathan Berezin -- Career as HL7 v2.x ADT-style message");
-  L.push("MSH|^~\\&|CV_SITE|JONATHAN_BEREZIN|VIEWER|WEB|"+ts+"||ADT^A08|MSG00001|P|2.5");
+  L.push("MSH|^~\\&|JB_CHART|JONATHAN_BEREZIN|VIEWER|WEB|"+ts+"||ADT^A08|MSG00001|P|2.5");
   L.push("EVN|A08|"+ts);
-  L.push("PID|1||JB-001^^^GITHUB||BEREZIN^JONATHAN||19850101|M|||REHOVOT^ISRAEL|||^WPN^PH^^^j.a.berezin@gmail.com");
-  L.push("PV1|1|O|DATA_MIGRATION^ENGINEER||||AESTO_HEALTH|||||||||||||||||||||||||||||||||||20230101");
+  L.push("PID|1||JB-001^^^GITHUB||BEREZIN^JONATHAN||19850101|M|||RAMAT_GAN^ISRAEL|||^WPN^PH^^^j.a.berezin@gmail.com");
+  L.push("PV1|1|O|MEDICAL_INFORMATICS^ENGINEER||||ANTIDOTE_HEALTH|||||||||||||||||||||||||||||||||||20260801");
   experience.forEach((job,i) => {
     const n = i+1;
     L.push("OBX|"+n+"|TX|ROLE^Job Role||"+job.title+" at "+job.org+"||||||F");
@@ -92,18 +121,16 @@ function buildHL7() {
     L.push("OBX|"+n+".2|TX|LOC^Location||"+job.location+"||||||F");
     job.bullets.forEach((b,j) => L.push("OBX|"+n+"."+(j+3)+"|TX|NOTE^Achievement||"+b+"||||||F"));
   });
-  L.push("NTE|1||Built bridges between clinical systems in digital healthcare.");
+  L.push("NTE|1||Medical Informatics · Clinical data bridges · Digital healthcare.");
   return L.join("\n");
 }
-
 function buildCCDA() {
   const d = new Date().toISOString().slice(0,10).replace(/-/g,"");
   const L = [];
-  L.push("<!-- Jonathan Berezin -- Career as simplified C-CDA ClinicalDocument -->");
+  L.push("<!-- Jonathan Berezin -- simplified C-CDA ClinicalDocument -->");
   L.push("<ClinicalDocument xmlns=\"urn:hl7-org:v3\">");
   L.push("  <typeId root=\"2.16.840.1.113883.1.3\" extension=\"POCD_HD000040\"/>");
   L.push("  <id root=\"2.16.840.1.113883.19.5\" extension=\"JB-CV-001\"/>");
-  L.push("  <code code=\"34133-9\" codeSystem=\"2.16.840.1.113883.6.1\" displayName=\"Summarization of Episode Note\"/>");
   L.push("  <title>Jonathan Berezin -- Professional Summary</title>");
   L.push("  <effectiveTime value=\""+d+"\"/>");
   L.push("  <recordTarget><patientRole>");
@@ -111,7 +138,6 @@ function buildCCDA() {
   L.push("    <patient><name><given>Jonathan</given><family>Berezin</family></name></patient>");
   L.push("  </patientRole></recordTarget>");
   L.push("  <component><structuredBody><component><section>");
-  L.push("    <code code=\"29762-2\" displayName=\"Social History\"/>");
   L.push("    <title>Professional Experience</title><text>");
   experience.forEach(job => {
     L.push("      <paragraph>");
@@ -124,7 +150,6 @@ function buildCCDA() {
   L.push("</ClinicalDocument>");
   return L.join("\n");
 }
-
 function buildJSON() {
   const obj = {
     resourceType: "Person", id: "jonathan-berezin",
@@ -134,25 +159,50 @@ function buildJSON() {
       {system:"url", value:"https://www.linkedin.com/in/jonathan-berezin"},
       {system:"url", value:"https://github.com/jonathan-berezin"}
     ],
-    address: [{city:"Rehovot", country:"IL"}],
+    address: [{city:"Ramat Gan", country:"IL"}],
     extension: [{url:"https://jonathan-berezin.github.io/fhir/StructureDefinition/professional-summary",
-      valueString:"Problem Solver, Data Migration/Integration Engineer, Python Developer in digital healthcare"}],
+      valueString:"Medical Informatics Engineer · Data Migration & Integration · Python"}],
     experience: experience.map(j => ({title:j.title, organization:j.org, period:{start:j.start,end:j.end}, location:j.location, highlights:j.bullets, tags:j.tags})),
-    skills: {core:["Python","SQL","ETL","Data Analysis"], standards:["HL7 V2","HL7 V3","HL7 FHIR","EDI","IHE QRPC"], tools:["Cursor","VS Code","PyCharm","AQT","SSMS","AWS S3/EC2/SQS/SNS","GitHub"]}
+    skills: {core:["Python","SQL","ETL","Data Analysis"], standards:["HL7 V2","HL7 V3","HL7 FHIR","EDI","IHE QRPC"], tools:["Cursor","VS Code","PyCharm","AQT","SSMS","AWS","GitHub"]}
   };
   return JSON.stringify(obj, null, 2);
 }
-
 panels.hl7.textContent = buildHL7();
 panels.ccda.textContent = buildCCDA();
 panels.json.textContent = buildJSON();
 
 function applyFormat(fmt) {
-  formatButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.format === fmt));
   Object.keys(panels).forEach(k => panels[k].classList.toggle("visible", k === fmt));
   document.body.classList.toggle("format-active", fmt !== "human");
+  if (fmt !== "human") {
+    document.getElementById("section-experience").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
-formatButtons.forEach(btn => btn.addEventListener("click", () => applyFormat(btn.dataset.format)));
+formatSelect.addEventListener("change", () => applyFormat(formatSelect.value));
+
+const searchInput = document.getElementById("globalSearch");
+const searchMeta = document.getElementById("searchMeta");
+function runSearch(q) {
+  q = (q || "").trim().toLowerCase();
+  let shown = 0, total = 0;
+  document.querySelectorAll(".exp-card, .edu-card").forEach(el => {
+    total++;
+    const hay = ((el.dataset.search || "") + " " + el.textContent).toLowerCase();
+    const match = !q || hay.includes(q);
+    el.classList.toggle("search-hide", !match);
+    if (match) shown++;
+  });
+  if (q) {
+    searchMeta.textContent = shown + " of " + total + " matches";
+    document.querySelectorAll(".exp-card:not(.search-hide)").forEach(c => c.classList.add("open"));
+  } else {
+    searchMeta.textContent = "";
+  }
+}
+searchInput.addEventListener("input", () => runSearch(searchInput.value));
+searchInput.addEventListener("keydown", e => {
+  if (e.key === "Escape") { searchInput.value = ""; runSearch(""); searchInput.blur(); }
+});
 
 applyLens("all");
 applyFormat("human");

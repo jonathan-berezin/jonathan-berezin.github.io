@@ -45,7 +45,6 @@ body {
 }
 a { color: var(--blue); text-decoration: none; }
 a:hover { color: var(--accent); }
-
 .top-nav {
   position: fixed; top: 0; left: 0; right: 0; height: var(--top-h);
   background: var(--bg-top); border-bottom: 1px solid var(--border);
@@ -76,7 +75,6 @@ a:hover { color: var(--accent); }
 .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
 .icon-btn svg { fill: currentColor; }
 .icon-btn .theme-sun circle { fill: currentColor; }
-
 .search-bar {
   position: fixed; top: var(--top-h); left: 0; right: 0; height: var(--search-h);
   background: var(--bg-panel); border-bottom: 1px solid var(--border);
@@ -96,7 +94,6 @@ a:hover { color: var(--accent); }
   color: var(--text-muted); pointer-events: none;
 }
 .search-meta { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
-
 .sidebar {
   position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w);
   background: var(--bg-sidebar); display: flex; flex-direction: column;
@@ -126,14 +123,12 @@ a:hover { color: var(--accent); }
   content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px;
   background: var(--accent); border-radius: 0 2px 2px 0;
 }
-
 .main {
   margin-left: var(--sidebar-w);
   margin-top: calc(var(--top-h) + var(--search-h));
   padding: 1.25rem 1.5rem 3rem;
   max-width: 980px;
 }
-
 .patient-banner {
   background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 1rem 1.25rem; display: grid; grid-template-columns: auto 1fr auto;
@@ -162,10 +157,8 @@ a:hover { color: var(--accent); }
   letter-spacing: 0.05em; color: var(--text-muted);
 }
 .demo-row a, .demo-row span { font-size: 0.8rem; font-weight: 500; color: var(--text); }
-
 .pane { display: none; }
 .pane.active { display: block; }
-
 .section-panel {
   background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow); overflow: hidden;
@@ -190,7 +183,6 @@ a:hover { color: var(--accent); }
 }
 .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
 .ctrl-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
-
 .snapshot-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;
 }
@@ -204,7 +196,6 @@ a:hover { color: var(--accent); }
 }
 .snap-value { font-size: 0.95rem; font-weight: 600; }
 .snap-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
-
 .exp-list { display: flex; flex-direction: column; gap: 0.75rem; }
 .exp-card {
   border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
@@ -239,28 +230,13 @@ a:hover { color: var(--accent); }
 .expand-hint { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.2rem; }
 .exp-card.open .chevron { display: inline-block; transform: rotate(180deg); }
 .chevron { transition: transform var(--transition); display: inline-block; }
-
-.view-timeline .exp-list { padding-left: 1.5rem; position: relative; }
-.view-timeline .exp-list::before {
-  content: ""; position: absolute; left: 0.4rem; top: 0.4rem; bottom: 0.4rem;
-  width: 2px; background: var(--border);
-}
-.view-timeline .exp-card { position: relative; margin-bottom: 0.85rem; }
-.view-timeline .exp-card::before {
-  content: ""; position: absolute; left: -1.22rem; top: 1.2rem; width: 10px; height: 10px;
-  border-radius: 50%; background: var(--bg-panel); border: 2.5px solid var(--accent); z-index: 1;
-}
-.view-timeline .exp-card.dimmed::before { border-color: var(--border); }
-.view-timeline .exp-card.highlighted::before { background: var(--accent); }
-
 .format-panel {
   display: none; font-family: var(--mono); font-size: 0.75rem; line-height: 1.5;
   background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 0.9rem 1rem; white-space: pre-wrap; word-break: break-word;
-  color: var(--text-muted); max-height: 420px; overflow-y: auto; margin-bottom: 0.75rem;
+  color: var(--text-muted); max-height: 480px; overflow-y: auto; margin-bottom: 0.75rem;
 }
 .format-panel.visible { display: block; }
-
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
 .skill-group {
   border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem;
@@ -279,8 +255,6 @@ a:hover { color: var(--accent); }
 .skill-chip:hover { border-color: var(--accent); color: var(--accent); }
 .skill-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 .skill-chip.highlight { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
-.skill-hint { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-
 .edu-list { display: flex; flex-direction: column; gap: 0.65rem; }
 .edu-card {
   border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1rem;
@@ -295,13 +269,11 @@ a:hover { color: var(--accent); }
 }
 .edu-card.open .edu-detail { max-height: 200px; }
 .edu-card.search-hide { display: none; }
-
 footer.emr-footer {
   margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border);
   text-align: center; font-size: 0.75rem; color: var(--text-muted);
 }
 body.format-active .human-only { display: none !important; }
-
 @media (max-width: 780px) {
   .patient-banner { grid-template-columns: auto 1fr; }
   .banner-demo {

@@ -1,1 +1,182 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jonathan Berezin — Data Migration & Integration Engineer</title>
+<meta name="theme-color" content="#0c1222" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="top-bar">
+    <div class="logo">JB</div>
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">☀</span></button>
+  </div>
+  <div class="hero">
+    <div class="avatar-wrap">
+      <img class="avatar" src="https://avatars.githubusercontent.com/u/68218342?v=4" alt="Jonathan Berezin" width="110" height="110" />
+      <div class="avatar-ring" aria-hidden="true"></div>
+    </div>
+    <div class="hero-text">
+      <h1>Jonathan Berezin</h1>
+      <p class="tagline">Problem Solver · Data Migration & Integration Engineer · Python Developer<br />Building bridges between clinical systems in digital healthcare.</p>
+      <div class="roles">
+        <span class="role-pill">Data Migration</span>
+        <span class="role-pill">HL7 / EDI / FHIR</span>
+        <span class="role-pill">Python Tooling</span>
+        <span class="role-pill">Healthcare Interop</span>
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/jonathan-berezin" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:j.a.berezin@gmail.com">j.a.berezin@gmail.com</a>
+        <a href="https://github.com/jonathan-berezin" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="experience">
+  <h2 class="section-title">Experience</h2>
+  <div class="control-bar">
+    <div class="control-row">
+      <span class="control-label">View</span>
+      <div class="btn-group" id="viewButtons">
+        <button class="ctrl-btn active" data-view="cards">Cards</button>
+        <button class="ctrl-btn" data-view="timeline">Timeline</button>
+      </div>
+    </div>
+    <div class="control-row">
+      <span class="control-label">Focus</span>
+      <div class="btn-group" id="lensButtons">
+        <button class="ctrl-btn active" data-lens="all">All</button>
+        <button class="ctrl-btn" data-lens="migration">Migration / ETL</button>
+        <button class="ctrl-btn" data-lens="edi">EDI · HL7 · FHIR</button>
+        <button class="ctrl-btn" data-lens="python">Python Tools</button>
+        <button class="ctrl-btn" data-lens="integration">Integration</button>
+        <button class="ctrl-btn" data-lens="design">UI / UX</button>
+        <button class="ctrl-btn" data-lens="mentoring">Mentoring</button>
+      </div>
+    </div>
+    <div class="control-row">
+      <span class="control-label">Format</span>
+      <div class="btn-group" id="formatButtons">
+        <button class="ctrl-btn format-btn active" data-format="human">Human</button>
+        <button class="ctrl-btn format-btn" data-format="hl7">HL7 v2</button>
+        <button class="ctrl-btn format-btn" data-format="ccda">C-CDA</button>
+        <button class="ctrl-btn format-btn" data-format="json">JSON</button>
+      </div>
+    </div>
+    <p class="hint">Cards ↔ Timeline · Focus lenses highlight matching work · Format re-encodes data the way interop systems talk.</p>
+  </div>
+  <div class="active-badge" id="activeLensBadge">
+    <span id="activeLensText"></span>
+    <button class="clear-btn" id="clearLens" aria-label="Clear">×</button>
+  </div>
+  <div class="format-panel" id="panel-hl7" aria-live="polite"></div>
+  <div class="format-panel" id="panel-ccda" aria-live="polite"></div>
+  <div class="format-panel" id="panel-json" aria-live="polite"></div>
+  <div id="humanView" class="view-cards">
+    <div class="exp-list" id="expList">
+      <article class="exp-card open" data-lenses="migration python design integration">
+        <div class="exp-header" data-toggle>
+          <div class="exp-title">Data Migration Engineer · Aesto Health</div>
+          <div class="exp-meta"><span>Jan 2023 – Present</span><span>Rehovot, Israel (Remote) · HQ Birmingham, AL</span></div>
+          <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">EMR</span><span class="exp-tag">UI/UX</span></div>
+          <div class="expand-hint"><span class="chevron">▾</span> details</div>
+        </div>
+        <div class="exp-body"><div class="exp-body-inner"><ul>
+          <li data-tags="migration integration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data into internal products.</li>
+          <li data-tags="python">Developed, tested, and distributed Python scripts and tools — CLIs and Textual GUIs — to assist with project work and organization.</li>
+          <li data-tags="design">Contributed to the improvement of UI/UX design of client-facing and internal products via development processes.</li>
+        </ul></div></div>
+      </article>
+      <article class="exp-card" data-lenses="migration python mentoring">
+        <div class="exp-header" data-toggle>
+          <div class="exp-title">Data Migration Engineer · Emerge Medical Data Intelligence</div>
+          <div class="exp-meta"><span>Jun 2021 – Dec 2022</span><span>Tel Aviv, Israel</span></div>
+          <div class="exp-tags"><span class="exp-tag">ETL</span><span class="exp-tag">Python</span><span class="exp-tag">Clinical Data</span><span class="exp-tag">Mentoring</span></div>
+          <div class="expand-hint"><span class="chevron">▾</span> details</div>
+        </div>
+        <div class="exp-body"><div class="exp-body-inner"><ul>
+          <li data-tags="migration">Explored and queried many different EMR vendors’ databases to extract, transform, and load clinical data to internal products.</li>
+          <li data-tags="python migration">Developed and tested Python modules and scripts for processing discrete clinical data, non-discrete documents, and images.</li>
+          <li data-tags="mentoring python">Educated teammates about Python and encouraged programming best practices in meetings and company articles.</li>
+        </ul></div></div>
+      </article>
+      <article class="exp-card" data-lenses="edi integration">
+        <div class="exp-header" data-toggle>
+          <div class="exp-title">Electronic Data Integration Consultant · Hyro Conversational AI</div>
+          <div class="exp-meta"><span>Oct 2020 – May 2021</span><span>Tel Aviv, Israel</span></div>
+          <div class="exp-tags"><span class="exp-tag">Epic</span><span class="exp-tag">APIs</span><span class="exp-tag">App Market</span></div>
+          <div class="expand-hint"><span class="chevron">▾</span> details</div>
+        </div>
+        <div class="exp-body"><div class="exp-body-inner"><ul>
+          <li data-tags="edi integration">Assisted project managers and developers through Epic’s process to be approved for Epic’s App Market (previously App Orchard).</li>
+          <li data-tags="edi integration">Reviewed and planned use of APIs for Provider-Availability and Patient-Appointment-Scheduling.</li>
+        </ul></div></div>
+      </article>
+      <article class="exp-card" data-lenses="edi integration migration">
+        <div class="exp-header" data-toggle>
+          <div class="exp-title">Electronic Data Integration Engineer · Epic</div>
+          <div class="exp-meta"><span>Oct 2013 – May 2017</span><span>Verona, Wisconsin, USA</span></div>
+          <div class="exp-tags"><span class="exp-tag">HL7</span><span class="exp-tag">EDI</span><span class="exp-tag">Research</span><span class="exp-tag">National Systems</span></div>
+          <div class="expand-hint"><span class="chevron">▾</span> details</div>
+        </div>
+        <div class="exp-body"><div class="exp-body-inner"><ul>
+          <li data-tags="edi integration">Directed and developed integrations to bridge Epic and Clinical Research Management Systems.</li>
+          <li data-tags="edi integration">Developed integrations with national databases in Australia and Finland to enhance patient care, including birth- and death-reporting.</li>
+          <li data-tags="edi integration migration">Implemented Access-, Ambulatory-, Research-, Revenue-, and Pharmacy-related integrations for The MD Anderson Cancer Center.</li>
+        </ul></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">Tech & Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-group"><h3>Core</h3><div class="skill-chips">
+      <span class="skill-chip" data-skill="python">Python</span><span class="skill-chip" data-skill="sql">SQL</span>
+      <span class="skill-chip" data-skill="etl">ETL</span><span class="skill-chip" data-skill="analysis">Data Analysis</span>
+    </div></div>
+    <div class="skill-group"><h3>Standards & Interop</h3><div class="skill-chips">
+      <span class="skill-chip" data-skill="hl7">HL7 V2</span><span class="skill-chip" data-skill="hl7">HL7 V3</span>
+      <span class="skill-chip" data-skill="fhir">HL7 FHIR</span><span class="skill-chip" data-skill="edi">EDI</span>
+      <span class="skill-chip" data-skill="ihe">IHE QRPC</span>
+    </div></div>
+    <div class="skill-group"><h3>Tools & Platforms</h3><div class="skill-chips">
+      <span class="skill-chip">Cursor</span><span class="skill-chip">VS Code</span><span class="skill-chip">PyCharm</span>
+      <span class="skill-chip">AQT</span><span class="skill-chip">SSMS</span>
+      <span class="skill-chip">AWS S3 / EC2 / SQS / SNS</span><span class="skill-chip">GitHub</span>
+    </div></div>
+  </div>
+</section>
+
+<section id="education">
+  <h2 class="section-title">Background</h2>
+  <div class="edu-list">
+    <div class="edu-card">
+      <h3>The Hebrew University of Jerusalem</h3>
+      <div class="edu-meta">Oct 2018 – May 2020 · Jerusalem, Israel</div>
+      <p>Computational Neuroscience and Information Processing, Masters/Ph.D. Student. Studied Machine Learning, Calculus, Dynamics, Statistics, Cognition, and Neurophysiology.</p>
+    </div>
+    <div class="edu-card">
+      <h3>The University of Texas at Austin</h3>
+      <div class="edu-meta">Aug 2008 – May 2013 · Austin, Texas, USA</div>
+      <p>B.S. in Computational Biomedical Engineering · Graduated with High Honors · GPA 3.92/4.0 · Engineering Scholar. Team project: designed the software for an “Automated Biotransistor Analyzer for microRNA Quantification and Cancer Prognosis.”</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Interactive CV · Free on GitHub Pages · <a href="https://github.com/jonathan-berezin/jonathan-berezin.github.io">Source</a></p>
+  <p style="margin-top:0.35rem">Get in touch on <a href="https://www.linkedin.com/in/jonathan-berezin" target="_blank" rel="noopener">LinkedIn</a> or email <a href="mailto:j.a.berezin@gmail.com">j.a.berezin@gmail.com</a></p>
+</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

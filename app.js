@@ -1,4 +1,3 @@
-
 const experience = [
   {id:"antidote",title:"Medical Informatics Engineer",org:"Antidote Health",start:"202608",end:"present",location:"Ramat Gan, Israel",
    bullets:["Supporting clinical and operational systems as Medical Informatics Engineer at a virtual-first health plan.","Applying healthcare data standards, integration patterns, and engineering practices across product and clinical workflows."],
@@ -21,7 +20,6 @@ const root = document.documentElement;
 const themeToggle = document.getElementById("themeToggle");
 function setTheme(t) {
   root.setAttribute("data-theme", t);
-  themeToggle.textContent = t === "dark" ? "\u263E" : "\u2600";
   localStorage.setItem("theme", t);
 }
 const saved = localStorage.getItem("theme");
@@ -31,14 +29,23 @@ else setTheme("light");
 themeToggle.addEventListener("click", () => setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark"));
 
 const navBtns = document.querySelectorAll(".nav-btn");
+const panes = document.querySelectorAll(".pane");
+
+function showPane(name) {
+  panes.forEach(p => p.classList.toggle("active", p.dataset.pane === name));
+  navBtns.forEach(b => b.classList.toggle("active", b.dataset.section === name));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 navBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    navBtns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    const el = document.getElementById("section-" + btn.dataset.section);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  btn.addEventListener("click", () => showPane(btn.dataset.section));
 });
+
+function goHome() {
+  showPane("chart");
+}
+document.getElementById("homeBtn").addEventListener("click", goHome);
+document.getElementById("brandHome").addEventListener("click", goHome);
 
 document.querySelectorAll("[data-toggle]").forEach(h => {
   h.addEventListener("click", () => h.closest(".exp-card").classList.toggle("open"));
@@ -95,7 +102,7 @@ skillChips.forEach(chip => {
     if (was) { applyLens("all"); return; }
     chip.classList.add("active");
     applyLens(chip.dataset.lens || "all");
-    document.getElementById("section-experience").scrollIntoView({ behavior: "smooth", block: "start" });
+    showPane("experience");
   });
 });
 
@@ -174,9 +181,7 @@ panels.json.textContent = buildJSON();
 function applyFormat(fmt) {
   Object.keys(panels).forEach(k => panels[k].classList.toggle("visible", k === fmt));
   document.body.classList.toggle("format-active", fmt !== "human");
-  if (fmt !== "human") {
-    document.getElementById("section-experience").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  if (fmt !== "human") showPane("experience");
 }
 formatSelect.addEventListener("change", () => applyFormat(formatSelect.value));
 
@@ -195,6 +200,7 @@ function runSearch(q) {
   if (q) {
     searchMeta.textContent = shown + " of " + total + " matches";
     document.querySelectorAll(".exp-card:not(.search-hide)").forEach(c => c.classList.add("open"));
+    showPane("experience");
   } else {
     searchMeta.textContent = "";
   }
@@ -206,3 +212,4 @@ searchInput.addEventListener("keydown", e => {
 
 applyLens("all");
 applyFormat("human");
+showPane("chart");

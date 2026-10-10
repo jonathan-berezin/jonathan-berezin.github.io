@@ -41,7 +41,7 @@
       <option value="human">Human</option>
       <option value="hl7">HL7 v2</option>
       <option value="ccda">C-CDA</option>
-      <option value="json">JSON</option>
+      <option value="fhir">FHIR</option>
     </select>
     <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Theme">
       <svg class="theme-sun" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
@@ -52,7 +52,7 @@
 <div class="search-bar">
   <div class="search-wrap">
     <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 15l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    <input type="search" id="globalSearch" placeholder="Search chart — roles, skills, orgs, keywords…" autocomplete="off" />
+    <input type="search" id="globalSearch" placeholder="Search roles, skills, orgs…" autocomplete="off" />
   </div>
   <span class="search-meta" id="searchMeta"></span>
 </div>
@@ -103,23 +103,16 @@
             <div class="snapshot-card">
               <div class="snap-label">Tools</div>
               <div class="snap-value">Python · SQL · ETL</div>
-              <div class="snap-meta">AWS · GitHub · EMR vendor DBs</div>
+              <div class="snap-meta">Claude Code · Cursor · AWS</div>
             </div>
           </div>
-          <p class="skill-hint" style="margin-top:1rem">Use the left toolbar to open Encounters, Skills, or Education — the patient banner stays put, like a real EMR chart.</p>
         </div>
       </div>
     </section>
 
     <section class="pane" id="section-experience" data-pane="experience">
       <div class="section-panel">
-        <div class="section-header">
-          <h2>Experience · Encounters</h2>
-          <div class="toolbar-row" style="margin:0">
-            <button class="ctrl-btn active" data-view="cards">Cards</button>
-            <button class="ctrl-btn" data-view="timeline">Timeline</button>
-          </div>
-        </div>
+        <div class="section-header"><h2>Experience · Encounters</h2></div>
         <div class="section-body">
           <div class="toolbar-row human-only" id="lensButtons">
             <button class="ctrl-btn active" data-lens="all">All</button>
@@ -130,10 +123,10 @@
             <button class="ctrl-btn" data-lens="design">UI / UX</button>
             <button class="ctrl-btn" data-lens="mentoring">Mentoring</button>
           </div>
-          <div class="format-panel" id="panel-hl7"></div>
-          <div class="format-panel" id="panel-ccda"></div>
-          <div class="format-panel" id="panel-json"></div>
-          <div id="humanView" class="view-cards human-only">
+          <div class="format-panel" id="panel-exp-hl7"></div>
+          <div class="format-panel" id="panel-exp-ccda"></div>
+          <div class="format-panel" id="panel-exp-fhir"></div>
+          <div id="humanView" class="human-only">
             <div class="exp-list" id="expList">
               <article class="exp-card open" data-lenses="integration edi python" data-search="antidote medical informatics engineer ramat gan 2026">
                 <div class="exp-header" data-toggle>
@@ -206,10 +199,12 @@
 
     <section class="pane" id="section-skills" data-pane="skills">
       <div class="section-panel">
-        <div class="section-header"><h2>Tech & Skills · Orders / Catalog</h2></div>
+        <div class="section-header"><h2>Tech & Skills</h2></div>
         <div class="section-body">
-          <p class="skill-hint">Click a skill to open Encounters filtered by that capability. Click again to clear.</p>
-          <div class="skills-grid" id="skillsGrid">
+          <div class="format-panel" id="panel-skills-hl7"></div>
+          <div class="format-panel" id="panel-skills-ccda"></div>
+          <div class="format-panel" id="panel-skills-fhir"></div>
+          <div class="skills-grid human-only" id="skillsGrid">
             <div class="skill-group">
               <h3>Core</h3>
               <div class="skill-chips">
@@ -232,6 +227,7 @@
             <div class="skill-group">
               <h3>Tools & Platforms</h3>
               <div class="skill-chips">
+                <button type="button" class="skill-chip" data-skill="claude" data-lens="python">Claude Code</button>
                 <button type="button" class="skill-chip" data-skill="cursor" data-lens="python">Cursor</button>
                 <button type="button" class="skill-chip" data-skill="vscode" data-lens="python">VS Code</button>
                 <button type="button" class="skill-chip" data-skill="pycharm" data-lens="python">PyCharm</button>
@@ -248,10 +244,12 @@
 
     <section class="pane" id="section-education" data-pane="education">
       <div class="section-panel">
-        <div class="section-header"><h2>Background · History</h2></div>
+        <div class="section-header"><h2>Background</h2></div>
         <div class="section-body">
-          <p class="skill-hint">Click a card to expand details.</p>
-          <div class="edu-list">
+          <div class="format-panel" id="panel-edu-hl7"></div>
+          <div class="format-panel" id="panel-edu-ccda"></div>
+          <div class="format-panel" id="panel-edu-fhir"></div>
+          <div class="edu-list human-only">
             <div class="edu-card" data-search="hebrew university jerusalem computational neuroscience machine learning 2018">
               <h3>The Hebrew University of Jerusalem</h3>
               <div class="edu-meta">Oct 2018 – May 2020 · Jerusalem, Israel</div>
@@ -269,7 +267,7 @@
   </div>
 
   <footer class="emr-footer">
-    JB+Chart · Interactive professional record · <a href="https://github.com/jonathan-berezin/jonathan-berezin.github.io">Source</a>
+    JB+Chart · <a href="https://github.com/jonathan-berezin/jonathan-berezin.github.io">Source</a>
   </footer>
 </main>
 <script src="app.js"></script>
